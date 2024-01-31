@@ -1,0 +1,53 @@
+{% extends "home/base.html" %}
+{% block title %}User Profile{% endblock %}
+{% block content %}
+{% load static %}
+
+
+<style>
+    .logoContainer {
+        display: none;
+    }
+</style>
+
+
+{% if message %}
+<div class="alert alert-info" role="alert">
+    {{message}}
+</div>
+{% endif %}
+
+<div class="container d-flex justify-content-center align-items-center" style="margin-top: 50px;">
+
+    <div class="card" style="width: 30rem;">
+        <div class="card-header fs-1 fw-bold text-primary">
+            Your Profile Details:
+        </div>
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item">
+                <br><p><strong>Username:</strong>&nbsp; <span id="displayUsername">{{request.user}}</span></p><br>
+            </li>
+            <li class="list-group-item">
+                <br><p><strong>First Name:</strong>&nbsp; <span id="displayUsername">{{first_name}}</span></p><br>
+            </li>
+            <li class="list-group-item">
+                <br><p><strong>Last Name:</strong>&nbsp; <span id="displayLastName">{{last_name}}</span></p><br>
+            </li>
+        </ul>
+    </div>
+
+</div>
+
+
+
+{% endblock %}
+
+{% block Script %}
+
+{% endblock %}
+
+<!-- signup.html -->
+<html>
+
+
+<!--  -->
