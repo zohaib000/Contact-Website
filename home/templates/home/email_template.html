@@ -1,0 +1,34 @@
+<!-- templates/your_app_name/email_template.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>New Form Submission</title>
+</head>
+
+<body>
+    <p>You have received a new form submission:</p>
+
+    <ul>
+        <li><strong>Date:</strong> {{ date }}</li>
+        <li><strong>Work Order ID:</strong> {{ ID }}</li>
+        <li><strong>Customer:</strong> {{ customer }}</li>
+        <li><strong>Job:</strong> {{ job }}</li>
+        <li><strong>Contractor:</strong> {{ contractor }}</li>
+        <li><strong>Time In:</strong> {{ timeIn }}</li>
+        <li><strong>Time Out:</strong> {{ timeOut }}</li>
+        <li><strong>Total Time:</strong> {{ totalTime }}</li>
+        <li><strong>Job Description:</strong> {{ jobDescription }}</li>
+        <li><strong>What Was Completed:</strong> {{ whatWasCompleted }}</li>
+        <li><strong>Still Needs Completed:</strong> {{ stillNeedsCompleted }}</li>
+        <li><strong>Notes:</strong> {{ notes }}</li>
+        <!-- Add more fields as needed -->
+    </ul>
+
+    <p>Best regards,<br>Your Django App</p>
+</body>
+
+</html>

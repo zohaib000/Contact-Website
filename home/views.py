@@ -13,6 +13,11 @@ import base64
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
+from django.core.mail import send_mail
+from django.template.loader import render_to_string
+from django.conf import settings
+from django.core.mail import EmailMultiAlternatives
+from django.utils.html import strip_tags
 
 
 def signup(request):
@@ -120,6 +125,35 @@ class home(View):
         for image in uploaded_images:
             form_data.add_uploaded_image(image)
 
+        # sending email
+        context_data = {
+            "date": date,
+            "ID": ID,
+            "customer": customer,
+            "job": job,
+            "contractor": contractor,
+            "timeIn": timeIn,
+            "timeOut": timeOut,
+            "totalTime": totalTime,
+            "jobDescription": jobDescription,
+            "whatWasCompleted": whatWasCompleted,
+            "stillNeedsCompleted": stillNeedsCompleted,
+            "notes": notes,
+        }
+        email_html_message = render_to_string("home/email_template.html", context_data)
+
+        # Send the email
+        subject = "New Form Submission"
+        from_email = "ap1solutions0201@gmail.com"  #
+        to_email = "deliverables@ap1solutions.com"  #
+
+        text_content = strip_tags(email_html_message)
+
+        # Send the email as both HTML and plain text
+        msg = EmailMultiAlternatives(subject, text_content, from_email, [to_email])
+        msg.attach_alternative(email_html_message, "text/html")
+        msg.send()
+
         return render(
             request,
             "home/index.html",
@@ -127,7 +161,8 @@ class home(View):
         )
 
     def get(self, request):
-        if request.user.is_authenticated:
-            return render(request, "home/index.html")
-        else:
-            return redirect("login")
+        # if request.user.is_authenticated:
+        return render(request, "home/index.html")
+
+    # else:
+    #     return redirect("login")
