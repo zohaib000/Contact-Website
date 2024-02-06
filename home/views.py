@@ -20,6 +20,16 @@ from django.core.mail import EmailMultiAlternatives
 from django.utils.html import strip_tags
 
 
+class viewReport(View):
+    def get(self, request, pk):
+        data_obj = FormData.objects.get(id=pk)
+        images = data_obj.uploaded_images.all()
+        print(images)
+        return render(
+            request, "home/report.html", context={"obj": data_obj, "images": images}
+        )
+
+
 def signup(request):
     if request.method == "POST":
         first_name = request.POST["first_name"]
@@ -100,8 +110,8 @@ class home(View):
         # getting signature image from base64 encoded data
         _, data = signature.split(";base64,")
         binary_data = base64.b64decode(data)
-        filename = f"Signatures/signature_{customer}.png"
-        with open(f"media/{filename}", "wb") as f:
+        filename = f"/var/www/Contact-Website/media/Signatures/signature_{customer}.png"
+        with open(f"{filename}", "wb") as f:
             f.write(binary_data)
 
         # creating object and saving data
@@ -118,14 +128,15 @@ class home(View):
             waht_was_completed=whatWasCompleted,
             still_needs_completed=stillNeedsCompleted,
             issues=notes,
-            signature=filename,
+            signature=f"Signatures/signature_{customer}.png",
         )
 
         # Add uploaded images to FormData
         for image in uploaded_images:
             form_data.add_uploaded_image(image)
 
-        # sending email
+            # sending email
+        view_report_url = f"http://localhost:8000/view_report/{form_data.id}"
         context_data = {
             "date": date,
             "ID": ID,
@@ -139,13 +150,15 @@ class home(View):
             "whatWasCompleted": whatWasCompleted,
             "stillNeedsCompleted": stillNeedsCompleted,
             "notes": notes,
+            "view_report_url": view_report_url,
         }
         email_html_message = render_to_string("home/email_template.html", context_data)
 
         # Send the email
-        subject = "New Form Submission"
+        subject = f"{date} - {customer}"
         from_email = "ap1solutions0201@gmail.com"  #
-        to_email = "deliverables@ap1solutions.com"  #
+        # to_email = "deliverables@ap1solutions.com"  #
+        to_email = "zh2935461@gmail.com"
 
         text_content = strip_tags(email_html_message)
 

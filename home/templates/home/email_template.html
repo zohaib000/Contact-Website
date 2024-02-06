@@ -13,20 +13,14 @@
     <p>You have received a new form submission:</p>
 
     <ul>
-        <li><strong>Date:</strong> {{ date }}</li>
-        <li><strong>Work Order ID:</strong> {{ ID }}</li>
-        <li><strong>Customer:</strong> {{ customer }}</li>
-        <li><strong>Job:</strong> {{ job }}</li>
-        <li><strong>Contractor:</strong> {{ contractor }}</li>
-        <li><strong>Time In:</strong> {{ timeIn }}</li>
-        <li><strong>Time Out:</strong> {{ timeOut }}</li>
-        <li><strong>Total Time:</strong> {{ totalTime }}</li>
-        <li><strong>Job Description:</strong> {{ jobDescription }}</li>
-        <li><strong>What Was Completed:</strong> {{ whatWasCompleted }}</li>
-        <li><strong>Still Needs Completed:</strong> {{ stillNeedsCompleted }}</li>
-        <li><strong>Notes:</strong> {{ notes }}</li>
-        <!-- Add more fields as needed -->
+        <!-- ... Your existing fields ... -->
     </ul>
+
+    <p>Click the button below to view the post:</p>
+    <a href="{{ view_report_url }}"
+        style="display: inline-block; padding: 10px; background-color: #4CAF50; color: #fff; text-decoration: none;">Click
+        here to view</a>
+
 
     <p>Best regards,<br>Your Django App</p>
 </body>

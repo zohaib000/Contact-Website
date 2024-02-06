@@ -3,7 +3,7 @@ from django.db import models
 
 class ImagesData(models.Model):
     image = models.ImageField(upload_to="Images")
-    
+
     def get(self):
         return self.image.url
 

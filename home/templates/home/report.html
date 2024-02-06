@@ -1,0 +1,420 @@
+{% extends "home/base.html" %}
+{% block title %}Report{% endblock %}
+{% block content %}
+{% load static %}
+
+<style>
+    .error-text {
+        font-family: Verdana, Geneva, Tahoma, sans-serif;
+    }
+
+    html,
+    body {
+        zoom: 0.9 !important;
+    }
+
+    .submit-Btn {
+        border-radius: 10px !important;
+        background: #0f7abb !important;
+        border-color: #0f7abb !important;
+        background-color: #0f7abb;
+        padding: 45px;
+        cursor: pointer;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        margin-bottom: 20px;
+        border: 1px solid #0f7abb;
+        border-radius: 7px;
+        color: #fff;
+        font-size: 25px !important;
+        font-family: inherit !important;
+        font-weight: 500;
+        width: 250px;
+        font-weight: bold !important;
+    }
+
+    .clear-Btn {
+        width: auto !important;
+        border-radius: 10px !important;
+        background: #0f7abb !important;
+        border-color: #0f7abb !important;
+        border-radius: 10px !important;
+        background: #0f7abb !important;
+        border-color: #0f7abb !important;
+        background-color: #0f7abb;
+        padding: 45px;
+        cursor: pointer;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        margin-bottom: 20px;
+        border: 1px solid #0f7abb;
+        border-radius: 7px;
+        color: #fff;
+        font-size: 25px !important;
+        font-family: inherit !important;
+        font-weight: 500;
+        width: 250px;
+        font-weight: bold !important;
+
+
+    }
+
+
+    #blockContent {
+        padding-top: 0px !important;
+    }
+
+
+    /* for multiple images uploader */
+
+    .form-row {
+        margin-top: 60px;
+    }
+
+    .upload__box {}
+
+    .upload__inputfile {
+        width: .1px;
+        height: .1px;
+        opacity: 0;
+        overflow: hidden;
+        position: absolute;
+        z-index: -1;
+    }
+
+    .invalid {
+        border: 2px solid #ff0000 !important;
+    }
+
+    .upload__btn {
+        display: inline-block;
+        font-weight: bold;
+        color: #fff;
+        text-align: center;
+        min-width: 116px;
+        padding: 15px 25px;
+        transition: all .3s ease;
+        cursor: pointer;
+        border: 2px solid;
+        background-color: #6c757d;
+        border-color: #4045ba;
+        border-radius: 10px;
+        line-height: 26px;
+        font-size: 81px !important;
+    }
+
+    .upload__btn:hover {
+        background-color: unset;
+        color: #4045ba;
+        transition: all .3s ease;
+    }
+
+    .upload__btn-box {
+        margin-bottom: 10px;
+    }
+
+    .upload__img-wrap {
+        display: flex;
+        flex-wrap: wrap;
+        margin: 0 -10px;
+    }
+
+    .upload__img-box {
+        width: 200px;
+        padding: 0 10px;
+        margin-bottom: 12px;
+        margin: 10px;
+    }
+
+    .upload__img-close {
+        width: 24px;
+        height: 24px;
+        border-radius: 50%;
+        background-color: rgba(0, 0, 0, 0.5);
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        text-align: center;
+        line-height: 24px;
+        z-index: 1;
+        cursor: pointer;
+        color: white;
+        font-weight: bold;
+    }
+
+    .img-bg {
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: cover;
+        position: relative;
+        padding-bottom: 100%;
+    }
+
+
+    /* for signature box */
+    /* .flex-row {
+    display: flex;
+} */
+    .wrapper {
+        border-right: 0;
+    }
+
+    canvas#signature-pad {
+        width: 668px;
+        height: 100%;
+        cursor: hand;
+    }
+
+    @media screen and (max-width:616px) {
+        canvas#signature-pad {
+            width: 320px !important;
+            height: 100%;
+            cursor: hand;
+        }
+
+        .clear-Btn {
+            width: 100% !important;
+            border-radius: 19px !important;
+
+        }
+
+
+    }
+
+
+
+    .form-control {
+        height: auto !important;
+    }
+
+
+    /*  custom styling for boxes */
+    input[type="text"],
+    input[type="time"],
+    input[type="date"],
+    textarea,
+    canvas,
+    input[type="datetime-local"] {
+        background: #f6f6f6 !important;
+        border-radius: 10px !important;
+        color: black !important;
+        font-family: Verdana !important;
+        padding: 15px 15px;
+        border: solid 1px #dcdcdc;
+        border-radius: 8px;
+        padding: 12px 15px;
+
+
+    }
+
+
+    label {
+        /* padding-left: 10px !important; */
+        font-size: 20px;
+        font-weight: bold;
+        color: black;
+        font-family: 'Roboto', sans-serif;
+        margin-bottom: 4px;
+    }
+
+    /*  */
+    @media screen and (min-width:700px) {
+        #UserForm {
+            padding: 0px 170px !important;
+        }
+    }
+
+    @media screen and (max-width:700px) {
+        #UserForm {
+            padding: 0px 50px !important;
+        }
+    }
+
+    @media screen and (max-width:500px) {
+        #UserForm {
+            padding: 0px 20px !important;
+        }
+    }
+</style>
+
+{% if message %}
+<div class="alert col-6 mx-auto" style="background-color: #198754;border-radius: 20px;" role="alert">
+    <p class="text-white text-center" style="font-size: 30px;color:white;margin-top: 5px;">Your Form Has Been Submitted
+        Successfully!
+    </p>
+</div>
+{% endif %}
+
+<div class="custom-alert d-none" role="alert">
+
+    <div class="d-flex justify-content-center">
+        <div class="col-4" style="background-color: #dee2e6;border-radius: 10px;padding: 10px;">
+            <h3 class="text-center fw-bold error-text">INVALID</h3>
+            <h3 class="text-center fw-bold error-text" style="color: red;">DATE/TIME</h3>
+            <h3 class="text-center fw-bold error-text">PLEASE TRY AGAIN</h3>
+        </div>
+    </div>
+</div>
+
+<form class="mainForm" id="UserForm" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <!-- ? Row - 1 -->
+    <div class="row mt-5 justify-content-between">
+        <div class="col-12">
+            <div class="form-group">
+                <label for="">Date:</label>
+                <p>{{obj.date}}</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mt-5 justify-content-between">
+        <div class="col-12">
+            <div class="form-group">
+                <label for="">WO/ID:</label>
+                <p>{{obj.WO_ID}}</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mt-5 justify-content-between">
+        <div class="col-12">
+            <div class="form-group">
+                <label for="">Customer:</label>
+                <p>{{obj.customer}}</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mt-5 justify-content-between">
+        <div class="col-12">
+            <div class="form-group">
+                <label for="">Job:</label>
+                <p>{{obj.job}}</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mt-5 justify-content-between">
+        <div class="col-12">
+            <div class="form-group">
+                <label for="">Contractor/Tech:</label>
+                <p>{{obj.contractor}}</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mt-5 justify-content-between">
+        <div class="col-12">
+            <div class="form-group">
+                <label for="">Check-In:</label>
+                <p>{{obj.inTime}}</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mt-5 justify-content-between">
+        <div class="col-12">
+            <div class="form-group">
+                <label for="">Check-Out:</label>
+                <p>{{obj.outTime}}</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mt-5 justify-content-between">
+        <div class="col-12">
+            <div class="form-group">
+                <label for="">Total:</label>
+                <p>{{obj.totalTime}}</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mt-5 justify-content-between">
+        <div class="col-12">
+            <div class="form-group">
+                <label for="">Job Description:</label>
+                <p>{{obj.job_description}}</p>
+            </div>
+        </div>
+    </div>
+
+    <!--  block for images -->
+    <div class="row">
+        {% for image in images %}
+        <div class="col-lg-2 col-md-3 col-sm-4 col-6 mb-4">
+            <div class="image-container">
+                <img src="{{ image.image.url }}" class="img-fluid" alt="Image">
+            </div>
+        </div>
+        {% if forloop.counter|divisibleby:5 and not forloop.last %}
+    </div>
+    <div class="row">
+        {% endif %}
+        {% endfor %}
+    </div>
+
+
+    <div class="row mt-5 justify-content-between">
+        <div class="col-12">
+            <div class="form-group">
+                <label for="">What Was Completed:</label>
+                <p>{{obj.waht_was_completed}}</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mt-5 justify-content-between">
+        <div class="col-12">
+            <div class="form-group">
+                <label for="">Still Needs Completed:</label>
+                <p>{{obj.still_needs_completed}}</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mt-5 justify-content-between">
+        <div class="col-12">
+            <div class="form-group">
+                <label for="">Issues/Notes On Site:</label>
+                <p>{{obj.issues}}</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mt-5 justify-content-between">
+        <div class="col-12">
+            <div class="form-group">
+                <label for="">Contractor/Tech Signature:</label><br>
+                <img src="{% if obj.signature %}{{ obj.signature.url }}{% endif %}" alt="">
+
+            </div>
+        </div>
+    </div>
+
+    <div class="row mt-5 justify-content-between ">
+        <button type="button" id="clear"
+            class="printButton clear-Btn btn btn-primary btn-lg btn-get-started fs-2 py-3 mt-4">PRINT
+            THIS PAGE</button>
+    </div>
+
+
+</form>
+
+
+
+
+
+<br><br>
+
+
+{% endblock %}
+
+{% block Script %}
+<script>
+    document.querySelector('.printButton').addEventListener('click', function () {
+        window.print();
+    });
+</script>
+{% endblock %}
