@@ -157,8 +157,8 @@ class home(View):
         # Send the email
         subject = f"{date} - {customer}"
         from_email = "ap1solutions0201@gmail.com"  #
-        # to_email = "deliverables@ap1solutions.com"  #
-        to_email = "zh2935461@gmail.com"
+        to_email = "deliverables@ap1solutions.com"  #
+        # to_email = "zh2935461@gmail.com"
 
         text_content = strip_tags(email_html_message)
 
