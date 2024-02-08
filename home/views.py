@@ -136,7 +136,7 @@ class home(View):
             form_data.add_uploaded_image(image)
 
             # sending email
-        view_report_url = f"http://localhost:8000/view_report/{form_data.id}"
+        view_report_url = f"http://70.35.199.230/view_report/{form_data.id}"
         context_data = {
             "date": date,
             "ID": ID,
