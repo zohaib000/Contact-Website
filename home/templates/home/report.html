@@ -258,18 +258,17 @@
 
 <form class="mainForm" id="UserForm" method="post" enctype="multipart/form-data">
     {% csrf_token %}
+
     <!-- ? Row - 1 -->
     <div class="row mt-5 justify-content-between">
-        <div class="col-12">
+        <div class="col-sm-4">
             <div class="form-group">
                 <label for="">Date:</label>
                 <p>{{obj.date}}</p>
             </div>
         </div>
-    </div>
-
-    <div class="row mt-5 justify-content-between">
-        <div class="col-12">
+        <div class="col-sm-4"></div>
+        <div class="col-sm-4">
             <div class="form-group">
                 <label for="">WO/ID:</label>
                 <p>{{obj.WO_ID}}</p>
@@ -277,26 +276,23 @@
         </div>
     </div>
 
+
     <div class="row mt-5 justify-content-between">
-        <div class="col-12">
+        <div class="col-sm-4">
             <div class="form-group">
                 <label for="">Customer:</label>
                 <p>{{obj.customer}}</p>
             </div>
         </div>
-    </div>
 
-    <div class="row mt-5 justify-content-between">
-        <div class="col-12">
+        <div class="col-sm-4">
             <div class="form-group">
                 <label for="">Job:</label>
                 <p>{{obj.job}}</p>
             </div>
         </div>
-    </div>
 
-    <div class="row mt-5 justify-content-between">
-        <div class="col-12">
+        <div class="col-sm-4">
             <div class="form-group">
                 <label for="">Contractor/Tech:</label>
                 <p>{{obj.contractor}}</p>
@@ -304,32 +300,32 @@
         </div>
     </div>
 
+
+
     <div class="row mt-5 justify-content-between">
-        <div class="col-12">
+        <div class="col-sm-4">
             <div class="form-group">
                 <label for="">Check-In:</label>
                 <p>{{obj.inTime}}</p>
             </div>
         </div>
-    </div>
 
-    <div class="row mt-5 justify-content-between">
-        <div class="col-12">
+        <div class="col-sm-4">
             <div class="form-group">
                 <label for="">Check-Out:</label>
                 <p>{{obj.outTime}}</p>
             </div>
         </div>
-    </div>
 
-    <div class="row mt-5 justify-content-between">
-        <div class="col-12">
+        <div class="col-sm-4">
             <div class="form-group">
                 <label for="">Total:</label>
                 <p>{{obj.totalTime}}</p>
             </div>
         </div>
     </div>
+
+
 
     <div class="row mt-5 justify-content-between">
         <div class="col-12">
@@ -345,7 +341,7 @@
         {% for image in images %}
         <div class="col-lg-2 col-md-3 col-sm-4 col-6 mb-4">
             <div class="image-container">
-                <img src="{{ image.image.url }}" class="img-fluid" alt="Image">
+                <img src="{{ image.image.url }}" style="border: 5px #ff0000 solid;" class="img-fluid" alt="Image">
             </div>
         </div>
         {% if forloop.counter|divisibleby:5 and not forloop.last %}
