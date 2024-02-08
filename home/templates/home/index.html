@@ -180,7 +180,7 @@
 
 
   }
-  
+
 
   .form-control {
     height: auto !important;
@@ -628,6 +628,10 @@
       // go to top
       document.body.scrollTop = 0; // For Safari
       document.documentElement.scrollTop = 0;
+
+      setTimeout(function () {
+        location.reload();
+      }, 5000);
 
     });
 
