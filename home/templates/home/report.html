@@ -341,7 +341,7 @@
         {% for image in images %}
         <div class="col-lg-2 col-md-3 col-sm-4 col-6 mb-4">
             <div class="image-container">
-                <img src="{{ image.image.url }}" style="border: 5px #ff0000 solid;" class="img-fluid" alt="Image">
+                <img src="{{ image.image.url }}" style="border: 5px #000000 solid;" class="img-fluid" alt="Image">
             </div>
         </div>
         {% if forloop.counter|divisibleby:5 and not forloop.last %}
