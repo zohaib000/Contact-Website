@@ -341,15 +341,16 @@
         {% for image in images %}
         <div class="col-lg-2 col-md-3 col-sm-4 col-6 mb-4">
             <div class="image-container">
-                <img src="{{ image.image.url }}" style="border: 5px #000000 solid;" class="img-fluid" alt="Image">
+                <img src="{{ image.image.url }}" style="border: 5px #000000 solid;width: 150px;height: 150px;"
+                    class="img-fluid" alt="Image">
             </div>
         </div>
-        {% if forloop.counter|divisibleby:5 and not forloop.last %}
+        <!-- {% if forloop.counter|divisibleby:5 and not forloop.last %} -->
     </div>
-    <div class="row">
+    <!-- <div class="row">
         {% endif %}
         {% endfor %}
-    </div>
+    </div> -->
 
 
     <div class="row mt-5 justify-content-between">

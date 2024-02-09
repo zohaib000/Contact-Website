@@ -18,6 +18,8 @@ from django.template.loader import render_to_string
 from django.conf import settings
 from django.core.mail import EmailMultiAlternatives
 from django.utils.html import strip_tags
+from django.urls import reverse
+from django.contrib import messages
 
 
 class viewReport(View):
@@ -167,11 +169,15 @@ class home(View):
         msg.attach_alternative(email_html_message, "text/html")
         msg.send()
 
-        return render(
-            request,
-            "home/index.html",
-            {"message": "Your Data is submitted successfully!"},
-        )
+        # return render(
+        #     request,
+        #     "home/index.html",
+        #     {"message": "Your Data is submitted successfully!"},
+        # )
+        message = "Your Data is submitted successfully!"
+        # Add success message to Django's messages framework
+        messages.success(request, message)
+        return redirect(reverse("home"))
 
     def get(self, request):
         # if request.user.is_authenticated:

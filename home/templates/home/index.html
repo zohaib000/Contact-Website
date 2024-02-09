@@ -236,11 +236,14 @@
   }
 </style>
 
-{% if message %}
+{% if messages %}
 <div class="alert col-6 mx-auto" style="background-color: #198754;border-radius: 20px;" role="alert">
-  <p class="text-white text-center" style="font-size: 30px;color:white;margin-top: 5px;">Your Form Has Been Submitted
-    Successfully!
+  {%for message in messages %}
+
+  <p class="text-white text-center" style="font-size: 30px;color:white;margin-top: 5px;">
+    {{ message }}
   </p>
+  {% endfor %}
 </div>
 {% endif %}
 
