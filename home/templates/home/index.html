@@ -213,6 +213,20 @@
   }
 
   /*  */
+  @media screen and (min-width:1180px) {
+    #UserForm {
+      padding: 0px 250px !important;
+    }
+
+    input[type="text"],
+    input[type="time"],
+    input[type="date"],
+    canvas,
+    input[type="datetime-local"] {
+      width: 90% !important;
+    }
+  }
+
   @media screen and (min-width:900px) {
     #UserForm {
       padding: 0px 200px !important;
@@ -224,7 +238,7 @@
     textarea,
     canvas,
     input[type="datetime-local"] {
-      font-size: 1.7vw;
+      font-size: 18px;
     }
   }
 
@@ -373,8 +387,8 @@
     <div class="col-12">
       <div class="form-group">
         <label for="">Job Description:</label>
-        <textarea required name="jobDescription" class="form-control form-control-lg" id="jobDescription" cols="30"
-          rows="10" placeholder="Enter Your Job Description Here..."></textarea>
+        <textarea style="height: 180px !important;" required name="jobDescription" class="form-control form-control-lg"
+          id="jobDescription" cols="30" rows="10" placeholder="Enter Your Job Description Here..."></textarea>
         <div class="d-flex justify-content-end py-3">
           <span class="text-end">From 1 To 10,000 Characters</span>
         </div>
@@ -401,8 +415,9 @@
     <div class="col-12">
       <div class="form-group">
         <label for="">What Was Completed:</label>
-        <textarea required name="whatWasCompleted" class="form-control form-control-lg" id="whatWasCompleted" cols="30"
-          rows="10" placeholder="What Was Completed"></textarea>
+        <textarea style="height: 180px !important;" required name="whatWasCompleted"
+          class="form-control form-control-lg" id="whatWasCompleted" cols="30" rows="10"
+          placeholder="What Was Completed"></textarea>
         <div class="d-flex justify-content-end py-3">
           <span class="text-end">From 1 To 10,000 Characters</span>
         </div>
@@ -416,8 +431,9 @@
     <div class="col-12">
       <div class="form-group">
         <label for="">Still Needs Completed:</label>
-        <textarea required name="stillNeedsCompleted" class="form-control form-control-lg" id="stillNeedsCompleted"
-          cols="30" rows="10" placeholder="Still Needs Completed"></textarea>
+        <textarea style="height: 180px !important;" required name="stillNeedsCompleted"
+          class="form-control form-control-lg" id="stillNeedsCompleted" cols="30" rows="10"
+          placeholder="Still Needs Completed"></textarea>
         <div class="d-flex justify-content-end py-3">
           <span class="text-end">From 1 To 10,000 Characters</span>
         </div>
@@ -430,8 +446,8 @@
     <div class="col-12">
       <div class="form-group">
         <label for="">Issues/Notes On Site:</label>
-        <textarea required name="notes" class="form-control form-control-lg" id="notes" cols="30" rows="10"
-          placeholder="Issues/Notes On Site"></textarea>
+        <textarea style="height: 180px !important;" required name="notes" class="form-control form-control-lg"
+          id="notes" cols="30" rows="10" placeholder="Issues/Notes On Site"></textarea>
         <div class="d-flex justify-content-end py-3">
           <span class="text-end">From 1 To 10,000 Characters</span>
         </div>
