@@ -55,8 +55,6 @@
     font-weight: 500;
     width: 250px;
     font-weight: bold !important;
-
-
   }
 
 
@@ -202,8 +200,6 @@
     border: solid 1px #dcdcdc;
     border-radius: 8px;
     padding: 12px 15px;
-
-
   }
 
 
@@ -217,21 +213,54 @@
   }
 
   /*  */
-  @media screen and (min-width:1000px) {
+  @media screen and (min-width:900px) {
     #UserForm {
-      padding: 0px 270px !important;
+      padding: 0px 200px !important;
+    }
+
+    input[type="text"],
+    input[type="time"],
+    input[type="date"],
+    textarea,
+    canvas,
+    input[type="datetime-local"] {
+      font-size: 1.7vw;
     }
   }
 
-  @media screen and (max-width:1000px) {
+  @media screen and (max-width:900px) {
     #UserForm {
-      padding: 0px 50px !important;
+      padding: 0px 180px !important;
+    }
+
+    input[type="text"],
+    input[type="time"],
+    input[type="date"],
+    textarea,
+    canvas,
+    input[type="datetime-local"] {
+      font-size: 1.8vw;
+    }
+  }
+
+  @media screen and (max-width:768px) {
+    #UserForm {
+      padding: 0px 180px !important;
+    }
+
+    input[type="text"],
+    input[type="time"],
+    input[type="date"],
+    textarea,
+    canvas,
+    input[type="datetime-local"] {
+      font-size: inherit;
     }
   }
 
   @media screen and (max-width:500px) {
     #UserForm {
-      padding: 0px 20px !important;
+      padding: 0px 70px !important;
     }
   }
 
@@ -267,14 +296,14 @@
   {% csrf_token %}
   <!-- ? Row - 1 -->
   <div class="row mt-5 justify-content-between">
-    <div class="col-sm-2">
+    <div class="col-md-4">
       <div class="form-group">
         <label for="">Date:</label>
         <input required type="date" name="date" class="form-control form-control-lg" />
       </div>
     </div>
 
-    <div class="col-sm-2">
+    <div class="col-md-4">
       <div class="form-group">
         <label for="">WO/ID:</label>
         <input required type="text" name="ID" class="form-control form-control-lg" placeholder="WO/ID" />
@@ -285,7 +314,7 @@
 
   <!-- ? Row - 2 -->
   <div class="row form-row justify-content-between">
-    <div class="col-sm-4">
+    <div class="col-md-4">
       <div class="form-group">
         <label for="">Customer:</label>
         <input required type="text" name="customer" class="form-control form-control-lg"
@@ -294,14 +323,14 @@
     </div>
 
 
-    <div class="col-sm-4">
+    <div class="col-md-4">
       <div class="form-group">
         <label for="">Job:</label>
         <input required type="text" name="job" class="form-control form-control-lg" placeholder="Job" />
       </div>
     </div>
 
-    <div class="col-sm-4">
+    <div class="col-md-4">
       <div class="form-group">
         <label for="">Contractor/Tech:</label>
         <input required type="text" name="contractor" class="form-control form-control-lg"
@@ -313,7 +342,7 @@
 
   <!-- ? Row - 3 -->
   <div class="row form-row justify-content-between">
-    <div class="col-sm-4">
+    <div class="col-md-4">
       <div class="form-group">
         <label for="">Clock In:</label>
         <input required type="datetime-local" name="timeIn" class="form-control form-control-lg" placeholder="" />
@@ -321,7 +350,7 @@
     </div>
 
 
-    <div class="col-sm-4">
+    <div class="col-md-4">
       <div class="form-group">
         <label for="">Clock Out:</label>
         <input required type="datetime-local" name="timeOut" class="form-control form-control-lg" placeholder=""
@@ -329,7 +358,7 @@
       </div>
     </div>
 
-    <div class="col-sm-4">
+    <div class="col-md-4">
       <div class="form-group">
         <label for="">Total Hours On-Site:</label>
         <input required type="text" name="totalTime" class="form-control form-control-lg" placeholder="" readonly />
@@ -448,7 +477,7 @@
 
   <!-- ? Final Row Submit Button -->
   <div class="row mt-5 py-4">
-    <div class="col-sm-4 mx-auto d-flex justify-content-center">
+    <div class="col-md-4 mx-auto d-flex justify-content-center">
       <input id="submitBtn" required type="submit" class="submit-Btn btn btn-primary btn-lg btn-get-started fs-1 p-3"
         value="Submit">
     </div>

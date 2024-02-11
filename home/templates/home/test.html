@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Job Notification Overlay</title>
+    <style>
+        /* Style for the overlay */
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            /* Semi-transparent black background */
+            color: white;
+            font-size: 24px;
+            display: none;
+            /* Initially hidden */
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="overlay" id="overlay">
+        <div id="notificationText"></div>
+    </div>
+
+    <script>
+        // Function to show the overlay with a message
+        function showOverlay(message) {
+            // Get the overlay element
+            var overlay = document.getElementById('overlay');
+            // Set the message text
+            document.getElementById('notificationText').innerText = message;
+            // Show the overlay
+            overlay.style.display = 'flex';
+        }
+
+        // Function to hide the overlay
+        function hideOverlay() {
+            // Get the overlay element
+            var overlay = document.getElementById('overlay');
+            // Hide the overlay
+            overlay.style.display = 'none';
+        }
+
+        // Example: Call showOverlay function to display a notification
+        // Replace this with your logic to detect new job notifications
+        setInterval(() => {
+            showOverlay('New job notification: Software Developer');
+            // Hide the overlay after 5 seconds
+            setTimeout(hideOverlay, 5000);
+        }, 10000); // Display a notification every 10 seconds
+    </script>
+</body>
+
+</html>
