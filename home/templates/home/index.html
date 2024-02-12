@@ -165,7 +165,7 @@
 
   @media screen and (max-width:616px) {
     canvas#signature-pad {
-      width: 360px !important;
+      /* width: 360px !important; */
       height: 100%;
       cursor: hand;
     }
@@ -259,7 +259,7 @@
 
   @media screen and (max-width:768px) {
     #UserForm {
-      padding: 0px 180px !important;
+      padding: 0px 100px !important;
     }
 
     input[type="text"],
@@ -268,13 +268,23 @@
     textarea,
     canvas,
     input[type="datetime-local"] {
-      font-size: inherit;
+      font-size: inherit !important;
     }
+
   }
 
   @media screen and (max-width:500px) {
     #UserForm {
-      padding: 0px 70px !important;
+      padding: 0px 20px !important;
+    }
+
+    input[type="text"],
+    input[type="time"],
+    input[type="date"],
+    textarea,
+    canvas,
+    input[type="datetime-local"] {
+      font-size: inherit !important;
     }
   }
 
@@ -460,7 +470,7 @@
 
 
   <div class="row">
-    <div class="col-6">
+    <div class="col-12 col-sm-6">
       <label for="">Contractor/Tech Signature:</label>
       <div>
         <div class="wrapper">
@@ -512,6 +522,24 @@
 {% endblock %}
 
 {% block Script %}
+
+<script>
+  function adjustSignaturePadWidth() {
+    var viewportWidth = window.innerWidth || document.documentElement.clientWidth;
+
+    // Check if viewport width is less than 616px (considered as mobile)
+    if (viewportWidth < 616) {
+      var textareaWidth = document.querySelector('textarea').clientWidth;
+      console.log(textareaWidth)
+      var signaturePad = document.getElementById('signature-pad');
+      signaturePad.style.width = `${textareaWidth}px`;
+    }
+  }
+
+  // Call the function initially and attach it to window resize event
+  adjustSignaturePadWidth();
+  window.addEventListener('resize', adjustSignaturePadWidth);
+</script>
 
 <script>
 

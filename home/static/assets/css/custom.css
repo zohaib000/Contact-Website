@@ -203,14 +203,6 @@
     }
 }
 
-@media screen and (max-width:616px) {
-    canvas#signature-pad {
-        width: 350px !important;
-        height: 100%;
-        cursor: hand;
-    }
-
-}
 
 @media screen and (max-width:768px) {
     .signup-form {
