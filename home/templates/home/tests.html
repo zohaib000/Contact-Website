@@ -299,7 +299,207 @@
 
 
 <!-- ? Row - 9 -->
+{% if messages %}
+<div class="alert col-6 mx-auto" style="background-color: #198754;border-radius: 20px;" role="alert">
+    {%for message in messages %}
 
+    <p class="text-white text-center" style="font-size: 30px;color:white;margin-top: 5px;">
+        {{ message }}
+    </p>
+    {% endfor %}
+</div>
+{% endif %}
+
+<div class="custom-alert d-none" role="alert">
+
+    <div class="d-flex justify-content-center">
+        <div class="col-4" style="background-color: #dee2e6;border-radius: 10px;padding: 10px;">
+            <h3 class="text-center fw-bold error-text">INVALID</h3>
+            <h3 class="text-center fw-bold error-text" style="color: red;">DATE/TIME</h3>
+            <h3 class="text-center fw-bold error-text">PLEASE TRY AGAIN</h3>
+        </div>
+    </div>
+</div>
+
+<form class="mainForm" id="UserForm" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <!-- ? Row - 1 -->
+    <div class="row mt-5 justify-content-between">
+        <div class="col-md-4">
+            <div class="form-group">
+                <label for="">Date:</label>
+                <input required type="date" name="date" class="form-control form-control-lg" />
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="form-group">
+                <label for="">WO/ID:</label>
+                <input required type="text" name="ID" class="form-control form-control-lg" placeholder="WO/ID" />
+            </div>
+        </div>
+    </div>
+
+
+    <!-- ? Row - 2 -->
+    <div class="row form-row justify-content-between">
+        <div class="col-md-4">
+            <div class="form-group">
+                <label for="">Customer:</label>
+                <input required type="text" name="customer" class="form-control form-control-lg"
+                    placeholder="Name, Location, Site #" />
+            </div>
+        </div>
+
+
+        <div class="col-md-4">
+            <div class="form-group">
+                <label for="">Job:</label>
+                <input required type="text" name="job" class="form-control form-control-lg" placeholder="Job" />
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="form-group">
+                <label for="">Contractor/Tech:</label>
+                <input required type="text" name="contractor" class="form-control form-control-lg"
+                    placeholder="Contractor/Tech:" />
+            </div>
+        </div>
+    </div>
+
+
+    <!-- ? Row - 3 -->
+    <div class="row form-row justify-content-between">
+        <div class="col-md-4">
+            <div class="form-group">
+                <label for="">Clock In:</label>
+                <input required type="datetime-local" name="timeIn" class="form-control form-control-lg"
+                    placeholder="" />
+            </div>
+        </div>
+
+
+        <div class="col-md-4">
+            <div class="form-group">
+                <label for="">Clock Out:</label>
+                <input required type="datetime-local" name="timeOut" class="form-control form-control-lg" placeholder=""
+                    onchange="calculateTimeDifference()" />
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="form-group">
+                <label for="">Total Hours On-Site:</label>
+                <input required type="text" name="totalTime" class="form-control form-control-lg" placeholder=""
+                    readonly />
+            </div>
+        </div>
+    </div>
+
+
+    <!-- ? Row - 4 -->
+    <div class="row form-row justify-content-between">
+
+        <div class="col-12">
+            <div class="form-group">
+                <label for="">Job Description:</label>
+                <textarea style="height: 180px !important;" required name="jobDescription"
+                    class="form-control form-control-lg" id="jobDescription" cols="30" rows="10"
+                    placeholder="Enter Your Job Description Here..."></textarea>
+                <div class="d-flex justify-content-end py-3">
+                    <span class="text-end">From 1 To 10,000 Characters</span>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- ? Row - 5 -->
+    <div class="upload__box">
+        <div class="upload__btn-box">
+            <label class="upload__btn ">
+                <i class="fa-solid fa-cloud-arrow-up"></i><br><br>
+                <p style="font-size: 20px;">UPLOAD IMAGE</p>
+                <input required type="file" multiple="" data-max_length="20" class="upload__inputfile"
+                    name="uploaded_images">
+            </label>
+        </div>
+        <div class="upload__img-wrap"></div>
+    </div>
+
+
+    <!-- ? Row - 6 -->
+    <div class="row form-row justify-content-between">
+        <div class="col-12">
+            <div class="form-group">
+                <label for="">What Was Completed:</label>
+                <textarea style="height: 180px !important;" required name="whatWasCompleted"
+                    class="form-control form-control-lg" id="whatWasCompleted" cols="30" rows="10"
+                    placeholder="What Was Completed"></textarea>
+                <div class="d-flex justify-content-end py-3">
+                    <span class="text-end">From 1 To 10,000 Characters</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- ? Row - 7 -->
+    <div class="row form-row justify-content-between">
+        <div class="col-12">
+            <div class="form-group">
+                <label for="">Still Needs Completed:</label>
+                <textarea style="height: 180px !important;" required name="stillNeedsCompleted"
+                    class="form-control form-control-lg" id="stillNeedsCompleted" cols="30" rows="10"
+                    placeholder="Still Needs Completed"></textarea>
+                <div class="d-flex justify-content-end py-3">
+                    <span class="text-end">From 1 To 10,000 Characters</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ? Row - 8 -->
+    <div class="row form-row justify-content-between">
+        <div class="col-12">
+            <div class="form-group">
+                <label for="">Issues/Notes On Site:</label>
+                <textarea style="height: 180px !important;" required name="notes" class="form-control form-control-lg"
+                    id="notes" cols="30" rows="10" placeholder="Issues/Notes On Site"></textarea>
+                <div class="d-flex justify-content-end py-3">
+                    <span class="text-end">From 1 To 10,000 Characters</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- ? Row - 9 -->
+
+
+
+    <div class="d-flex d-none loadingContainer">
+        <div class="col-6 mx-auto">
+            <div class="d-flex mx-auto spinner-border text-primary" role="status">
+                <span class="sr-only">Loading...</span>
+            </div>
+            <br>
+            <p class="text-danger text-center fw-bold">Please dont close your browser untill form is submitted</p>
+        </div>
+
+    </div>
+
+    <!-- ? Final Row Submit Button -->
+    <div class="row mt-5 py-4">
+        <div class="col-md-4 mx-auto d-flex justify-content-center">
+            <input id="submitBtn" required type="submit"
+                class="submit-Btn btn btn-primary btn-lg btn-get-started fs-1 p-3" value="Submit">
+        </div>
+    </div>
+
+
+</form>
 
 <div class="row">
     <div class="col-12 col-sm-6">
