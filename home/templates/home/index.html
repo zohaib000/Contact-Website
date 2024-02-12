@@ -525,16 +525,16 @@
 
 <script>
   window.addEventListener('load', function () {
-    /* 
-        var viewportWidth = window.innerWidth || document.documentElement.clientWidth;
-    
-        // Check if viewport width is less than 616px (considered as mobile)
-        if (viewportWidth < 616) {
-          var textareaWidth = document.querySelector('textarea').clientWidth;
-          console.log(textareaWidth);
-          var signaturePad = document.getElementById('signature-pad');
-          signaturePad.style.setProperty('width', `${textareaWidth}px`, 'important');
-        } */
+
+    var viewportWidth = window.innerWidth || document.documentElement.clientWidth;
+
+    // Check if viewport width is less than 616px (considered as mobile)
+    if (viewportWidth < 616) {
+      var textareaWidth = document.querySelector('textarea').clientWidth;
+      console.log(textareaWidth);
+      var signaturePad = document.getElementById('signature-pad');
+      signaturePad.style.setProperty('width', `${textareaWidth}px`, 'important');
+    }
 
     /* var canvas = document.getElementById("signature-pad"); */
     /* var clearButton = document.getElementById("clear"); */
