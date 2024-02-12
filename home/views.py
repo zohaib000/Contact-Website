@@ -185,3 +185,8 @@ class home(View):
 
     # else:
     #     return redirect("login")
+
+
+class tests(View):
+    def get(self, request):
+        return render(request, "home/tests.html")
