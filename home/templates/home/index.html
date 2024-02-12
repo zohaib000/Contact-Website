@@ -533,9 +533,9 @@
       var textareaWidth = document.querySelector('textarea').clientWidth;
       console.log(textareaWidth);
       var signaturePad = document.getElementById('signature-pad');
-      signaturePad.style.width = `${textareaWidth}px`;
+      signaturePad.style.setProperty('width', `${textareaWidth}px`, 'important');
     }
-  }); // Add the closing parenthesis here
+  });
 </script>
 
 
