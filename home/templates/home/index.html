@@ -524,22 +524,20 @@
 {% block Script %}
 
 <script>
-  function adjustSignaturePadWidth() {
+  window.addEventListener('load', function () {
+
     var viewportWidth = window.innerWidth || document.documentElement.clientWidth;
 
     // Check if viewport width is less than 616px (considered as mobile)
     if (viewportWidth < 616) {
       var textareaWidth = document.querySelector('textarea').clientWidth;
-      console.log(textareaWidth)
+      console.log(textareaWidth);
       var signaturePad = document.getElementById('signature-pad');
       signaturePad.style.width = `${textareaWidth}px`;
     }
-  }
-
-  // Call the function initially and attach it to window resize event
-  adjustSignaturePadWidth();
-  window.addEventListener('resize', adjustSignaturePadWidth);
+  }); // Add the closing parenthesis here
 </script>
+
 
 <script>
 
