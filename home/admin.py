@@ -14,6 +14,8 @@ class FormDataAdmin(admin.ModelAdmin):
         if field.name != "uploaded_images"
     ] + ["display_uploaded_images"]
 
+    search_fields = ["user"]
+
     def display_uploaded_images(self, obj):
         image_urls = [
             "http://127.0.0.1:8000" + image.image.url
