@@ -23,6 +23,7 @@ class FormData(models.Model):
     issues = models.TextField()
     signature = models.ImageField(upload_to="Signatures")
     uploaded_images = models.ManyToManyField(ImagesData)
+    user = models.CharField(max_length=500, default="admin")
 
     def add_uploaded_image(self, image):
         uploaded_image = ImagesData.objects.create(image=image)

@@ -82,9 +82,12 @@ def profile(request):
         if request.user.is_authenticated:
             user_profile = User.objects.get(username=request.user)
 
+            jobs = FormData.objects.filter(user=request.user)
+
             context = {
                 "first_name": user_profile.first_name,
                 "last_name": user_profile.last_name,
+                "jobs": jobs,
             }
 
             return render(request, "home/profile.html", context)
@@ -107,14 +110,14 @@ class home(View):
         stillNeedsCompleted = request.POST.get("stillNeedsCompleted")
         notes = request.POST.get("notes")
         uploaded_images = request.FILES.getlist("uploaded_images")
-        signature = request.POST.get("signature_data")
+        # signature = request.POST.get("signature_data")
 
-        # getting signature image from base64 encoded data
-        _, data = signature.split(";base64,")
-        binary_data = base64.b64decode(data)
-        filename = f"/var/www/Contact-Website/media/Signatures/signature_{customer}.png"
-        with open(f"{filename}", "wb") as f:
-            f.write(binary_data)
+        # # getting signature image from base64 encoded data
+        # _, data = signature.split(";base64,")
+        # binary_data = base64.b64decode(data)
+        # filename = f"/var/www/Contact-Website/media/Signatures/signature_{customer}.png"
+        # with open(f"{filename}", "wb") as f:
+        #     f.write(binary_data)
 
         # creating object and saving data
         form_data = FormData.objects.create(
