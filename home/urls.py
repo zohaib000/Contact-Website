@@ -14,4 +14,6 @@ urlpatterns = [
     path("profile/", views.profile, name="profile"),
     path("view_report/<int:pk>", views.viewReport.as_view(), name="view_report"),
     path("tests", views.tests.as_view(), name="tests"),
+    # admin panel access to see users jobs
+    path("viewUsersJobs", views.viewUsersJobs.as_view(), name="viewUsersJobs"),
 ]

@@ -32,6 +32,19 @@ class viewReport(View):
         )
 
 
+class viewUsersJobs(View):
+    def get(self, request):
+        # Query all users
+        users = User.objects.all()
+
+        # Pass the users to the template
+        return render(
+            request,
+            "home/viewUsersJobs.html",
+            context={"users": users},
+        )
+
+
 def signup(request):
     if request.method == "POST":
         first_name = request.POST["first_name"]
@@ -134,6 +147,7 @@ class home(View):
             still_needs_completed=stillNeedsCompleted,
             issues=notes,
             signature=f"Signatures/signature_{customer}.png",
+            user=request.user,
         )
 
         # Add uploaded images to FormData
