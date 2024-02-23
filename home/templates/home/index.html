@@ -372,7 +372,7 @@
     <div class="col-md-4">
       <div class="form-group">
         <label for="">Clock In:</label>
-        <input required type="datetime-local" name="timeIn" class="form-control form-control-lg" placeholder="" />
+        <input required type="datetime-local" name="timeIn" class="form-control form-control-lg" placeholder="" onchange="calculateTimeDifference()" />
       </div>
     </div>
 
@@ -788,6 +788,23 @@
 
     var submitBtn = document.getElementById("submitBtn");
     submitBtn.addEventListener("click", function () {
+
+       const alertBox = document.querySelector(".custom-alert");
+      if (!(alertBox.classList.contains("d-none"))) {
+        alert("Please Enter Valid Clock in(Must be in Past) & Clock Out(Must be in Future)!")
+
+        var formControls = document.querySelectorAll('.form-control');
+        console.log(formControls)
+        formControls.forEach(function (control) {
+          if (!control.checkValidity()) {
+            control.style.backgroundColor = "#ff0000!important;";
+            control.classList.add("invalid");
+          }
+        });
+
+      }
+
+
       var formControls = document.querySelectorAll('.form-control');
       console.log(formControls)
       formControls.forEach(function (control) {
