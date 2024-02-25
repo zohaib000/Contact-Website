@@ -416,7 +416,7 @@
       <label class="upload__btn ">
         <i class="fa-solid fa-cloud-arrow-up"></i><br><br>
         <p style="font-size: 20px;">UPLOAD IMAGE</p>
-        <input required type="file" multiple="" data-max_length="20" class="upload__inputfile" name="uploaded_images">
+        <input required type="file" multiple="" data-max_length="20" class="upload__inputfile" name="uploaded_images" id="fileInput" />
       </label>
     </div>
     <div class="upload__img-wrap"></div>
@@ -470,7 +470,7 @@
 
 
   <!-- ? Row - 9 -->
-
+<input type="file" multiple name="data_files" id="data_files">
 
   <div class="d-flex d-none loadingContainer">
     <div class="col-6 mx-auto">
@@ -706,9 +706,49 @@
   function ImgUpload() {
     var imgWrap = "";
     var imgArray = [];
+    var existingFiles = [];
+    
 
     $('.upload__inputfile').each(function () {
       $(this).on('change', function (e) {
+
+        alert('this called')
+        var files = e.target.files;
+      console.log(files.length)
+
+        if (files) {
+            var dataFilesInput = document.getElementById("data_files");
+
+            // Append new files to existing files
+            for (var i = 0; i < files.length; i++) {
+              existingFiles.push(files[i]);
+            }
+
+            // Create a new FileList object
+            var fileList = new DataTransfer();
+
+            // Append existing files to the fileList
+            for (var j = 0; j < existingFiles.length; j++) {
+              fileList.items.add(existingFiles[j]);
+            }
+
+            // Set the fileList to the files property of the input element
+            dataFilesInput.files = fileList.files;
+
+
+
+          // Hide the file input field
+          document.getElementById("fileInput").style.display = "none";
+
+          // Create a new input field for uploading additional images
+          var newInput = document.createElement("input");
+          newInput.type = "file";
+          newInput.multiple = true;
+          newInput.className = "upload__inputfile";
+          newInput.name = "uploaded_images";
+          document.querySelector(".upload__btn").appendChild(newInput);
+        }
+        
         imgWrap = $(this).closest('.upload__box').find('.upload__img-wrap');
         var maxLength = $(this).attr('data-max_length');
 
