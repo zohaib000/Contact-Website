@@ -298,14 +298,16 @@ display: none;
 </style>
 
 {% if messages %}
-<div class="alert col-6 mx-auto" style="background-color: #198754;border-radius: 20px;" role="alert">
-  {%for message in messages %}
-
-  <p class="text-white text-center" style="font-size: 30px;color:white;margin-top: 5px;">
-    {{ message }}
-  </p>
-  {% endfor %}
-</div>
+<div class="row p-5">
+  <div class="alert col-12 mx-auto col-sm-6" style="background-color: #198754;border-radius: 20px;" role="alert">
+    {% for message in messages %}
+  
+    <p class="text-white text-center" style="font-size: 20px;color:white;margin-top: 5px;">
+      {{ message }}
+    </p>
+    {% endfor %}
+  </div>
+<div>
 {% endif %}
 
 <div class="custom-alert d-none" role="alert">
