@@ -20,6 +20,50 @@ from django.core.mail import EmailMultiAlternatives
 from django.utils.html import strip_tags
 from django.urls import reverse
 from django.contrib import messages
+from io import BytesIO
+from PIL import Image, ImageDraw, ImageFont
+import shutil
+import os 
+MEDIA_ROOT=settings.MEDIA_ROOT
+
+def add_text_overlay(image_path, customer, date, custom_text, output_path):
+    img = Image.open(image_path)
+    img = img.convert("RGB")
+    draw = ImageDraw.Draw(img)
+
+    # Define font and size
+    font_size = 20
+    font = ImageFont.truetype("arial.ttf", font_size)
+    ascent, descent = font.getmetrics()
+    text_width = font.getmask(custom_text).getbbox()[2]
+    text_height = font.getmask(custom_text).getbbox()[3] + descent
+
+    # Set box size based on text size
+    box_width = img.width
+    box_height = 80
+
+    # get
+
+    # Draw grey box
+    draw.rectangle([(0, 0), (box_width, box_height)], fill=(128, 128, 128, 128))
+
+    # Draw text on the image
+    draw.text((15, 10), f"{customer} - {date}", fill=(0, 0, 0, 255), font=font)
+    draw.text(
+        ((img.width - text_width) // 2, 45), custom_text, fill=(0, 0, 0, 255), font=font
+    )
+
+    # Save the image with overlay
+    img.save(output_path)
+
+    # # # Convert image to bytes
+    # img_byte_array = BytesIO()
+    # img.save(img_byte_array, format="JPEG")
+
+    # # Reset file pointer to the beginning
+    # img_byte_array.seek(0)
+
+    # return img_byte_array
 
 
 class viewReport(View):
@@ -122,15 +166,9 @@ class home(View):
         whatWasCompleted = request.POST.get("whatWasCompleted")
         stillNeedsCompleted = request.POST.get("stillNeedsCompleted")
         notes = request.POST.get("notes")
-        uploaded_images = request.FILES.getlist("uploaded_images")
-        # signature = request.POST.get("signature_data")
-
-        # # getting signature image from base64 encoded data
-        # _, data = signature.split(";base64,")
-        # binary_data = base64.b64decode(data)
-        # filename = f"/var/www/Contact-Website/media/Signatures/signature_{customer}.png"
-        # with open(f"{filename}", "wb") as f:
-        #     f.write(binary_data)
+        uploaded_images = request.FILES.getlist("data_files")
+        captions = request.POST.getlist("caption")
+        print(len(uploaded_images))
 
         # creating object and saving data
         form_data = FormData.objects.create(
@@ -151,8 +189,18 @@ class home(View):
         )
 
         # Add uploaded images to FormData
-        for image in uploaded_images:
-            form_data.add_uploaded_image(image)
+        for caption,image in zip(captions,uploaded_images):
+            print(image.name)
+            image_name=image.name
+            # Example usage:
+            img_bytes = add_text_overlay(
+                image.file, customer, date, caption, image_name
+            )
+            shutil.copyfile(image_name, f"{MEDIA_ROOT}/Images/{image_name}")
+            form_data.add_uploaded_image(f"Images/{image_name}")
+            os.remove(f"{image_name}")
+
+            # form_data.add_uploaded_image("output_image.jpg")
 
             # sending email
         view_report_url = f"http://70.35.199.230/view_report/{form_data.id}"
@@ -197,6 +245,7 @@ class home(View):
         return redirect(reverse("home"))
 
     def get(self, request):
+        print(MEDIA_ROOT)
         # if request.user.is_authenticated:
         return render(request, "home/index.html")
 
