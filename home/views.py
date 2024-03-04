@@ -189,18 +189,23 @@ class home(View):
         )
 
         # Add uploaded images to FormData
-        for caption,image in zip(captions,uploaded_images):
-            print(image.name)
-            image_name=image.name
-            # Example usage:
-            img_bytes = add_text_overlay(
-                image.file, customer, date, caption, image_name
-            )
-            shutil.copyfile(image_name, f"{MEDIA_ROOT}/Images/{image_name}")
-            form_data.add_uploaded_image(f"Images/{image_name}")
-            os.remove(f"{image_name}")
+        for image in uploaded_images:
+            print(image)
+            form_data.add_uploaded_image(image)
+            
+        # # Add uploaded images to FormData
+        # for caption,image in zip(captions,uploaded_images):
+        #     print(image.name)
+        #     image_name=image.name
+        #     # Example usage:
+        #     img_bytes = add_text_overlay(
+        #         image.file, customer, date, caption, image_name
+        #     )
+        #     shutil.copyfile(image_name, f"{MEDIA_ROOT}/Images/{image_name}")
+        #     form_data.add_uploaded_image(f"Images/{image_name}")
+        #     os.remove(f"{image_name}")
 
-            # form_data.add_uploaded_image("output_image.jpg")
+        #     # form_data.add_uploaded_image("output_image.jpg")
 
             # sending email
         view_report_url = f"http://70.35.199.230/view_report/{form_data.id}"

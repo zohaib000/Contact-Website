@@ -9,12 +9,14 @@
   }
 
   #data_files{
-display: none;
+/* display: none; */
   }
   html,
   body {
     zoom: 0.9 !important;
   }
+
+
 
   .submit-Btn {
     border-radius: 10px !important;
@@ -426,6 +428,8 @@ display: none;
       </label>
     </div>
     <div class="upload__img-wrap"></div>
+<button type="button" onclick="ResetImages()" class="btn btn-warning">Process Images</button>
+
   </div>
 
 
@@ -476,9 +480,9 @@ display: none;
 
 
   <!-- ? Row - 9 -->
-<input type="file" multiple name="data_files" id="data_files">
+<input type="file" multiple name="data_files" id="data_files" class="d-none">
 
-  <div class="d-flex d-none loadingContainer">
+  <div class="d-none loadingContainer">
     <div class="col-6 mx-auto">
       <div class="d-flex mx-auto spinner-border text-primary" role="status">
         <span class="sr-only">Loading...</span>
@@ -501,6 +505,35 @@ display: none;
 </form>
 
 
+<!-- Button trigger modal -->
+<!-- ModalBOX -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Edit your Image</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+         
+            <input type="text" id="customerInput" placeholder="Customer" class="form-control"><br>
+            <input type="text" id="dateInput" placeholder="Date" class="form-control"><br>
+            <input type="text" id="customTextInput" placeholder="Custom Text" class="form-control"><br>
+            <canvas id="canvas" style="margin-top: 20px;" class="d-none" style="display: none;"></canvas><br>
+            <img src="" id="outputImage" alt="">
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" data-dismiss="modal">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
 
 
 
@@ -510,6 +543,177 @@ display: none;
 {% endblock %}
 
 {% block Script %}
+
+  <script>
+    $(document).ready(function() {
+      $('#exampleModal').on('hidden.bs.modal', function () {
+        $('body').css('overflow', 'auto');
+      });
+  });
+</script>
+  <script>
+
+  function ResetImages() {
+      // Find all elements with class .img-bg and extract background image URLs
+      const imgElements = document.querySelectorAll('.img-bg');
+      const urls = Array.from(imgElements).map(imgElement => {
+        const backgroundImageStyle = window.getComputedStyle(imgElement).backgroundImage;
+        return backgroundImageStyle.substring(5, backgroundImageStyle.length - 2);
+      });
+
+      // Clear existing files in the input element with the name data_files
+      const dataFilesInput = document.getElementById("data_files");
+      dataFilesInput.value = ''; // Clear the value to clear existing files
+
+      // Create a new FileList object
+      const fileList = new DataTransfer();
+
+      // Add files based on the extracted URLs to the FileList object
+      urls.forEach(url => {
+        fetch(url)
+          .then(response => response.blob())
+          .then(blob => {
+            // Create the File object with the correct MIME type (JPEG)
+            let filename = 'img_' + Math.random().toString(36).substring(7) + '.jpg';
+            const file = new File([blob], filename, { type: "image/jpeg", lastModified: new Date().getTime() });
+
+            // Add the file to the FileList object
+            fileList.items.add(file);
+
+            // Update the input element with the new files
+            dataFilesInput.files = fileList.files;
+          })
+          .catch(error => {
+            console.error('Error fetching image:', error);
+          });
+      });
+    }
+
+
+    // these are properties of image showing in form
+    var backgroundImage=null;
+    var backgroundImageSrc=null;
+
+    function openModal(button) {
+        // getting customer and date  
+        const customer=$("input[name='customer']").val()
+        const date =$("input[name='date']").val()
+
+        
+        $("#customerInput").val(customer)
+        $("#dateInput").val(date)
+
+        // Get the parent div of the button
+        const parentDiv = button.closest('.upload__img-box');
+
+        // Set the background image using data from the parent div
+        backgroundImage = parentDiv.querySelector('.img-bg');
+        const backgroundImageStyle = window.getComputedStyle(parentDiv.querySelector('.img-bg')).backgroundImage;
+        backgroundImageSrc = backgroundImageStyle.substring(5, backgroundImageStyle.length - 2);
+
+        handleImage()
+
+        // Open the modal
+        $('#exampleModal').modal('show');
+        $('#exampleModal').modal('hide');
+        $('body').removeClass('modal-open');
+        $('.modal-backdrop').remove();
+
+      }
+
+    /* document.getElementById('imageInput').addEventListener('change', handleImage, false); */
+    document.getElementById('customerInput').addEventListener('input', drawText, false);
+    document.getElementById('dateInput').addEventListener('input', drawText, false);
+    document.getElementById('customTextInput').addEventListener('input', drawText, false);
+
+    let imgSrc = '';
+    function handleImage() {
+        const img = new Image();
+        img.onload = function () {
+          const canvas = document.getElementById('canvas');
+          canvas.willReadFrequently = true;
+          const ctx = canvas.getContext('2d');
+          canvas.width = img.width;
+          canvas.height = img.height;
+          ctx.drawImage(img, 0, 0);
+          imgSrc = img.src;
+          drawText();
+        }
+        img.src = backgroundImageSrc;
+      }
+
+    /* function handleImage(e) {
+      const reader = new FileReader();
+      reader.onload = function (event) {
+        const img = new Image();
+        img.onload = function () {
+          const canvas = document.getElementById('canvas');
+          canvas.willReadFrequently = true;
+          const ctx = canvas.getContext('2d');
+          canvas.width = img.width;
+          canvas.height = img.height;
+          ctx.drawImage(img, 0, 0);
+          imgSrc = img.src;
+          drawText();
+        }
+        img.src = event.target.result;
+      }
+      reader.readAsDataURL(e.target.files[0]);
+    } */
+
+    function drawText() {
+      if (!imgSrc) return;
+
+      const canvas = document.getElementById('canvas');
+      canvas.willReadFrequently = true;
+      const ctx = canvas.getContext('2d');
+      const customer = document.getElementById('customerInput').value;
+      const date = document.getElementById('dateInput').value;
+      const customText = document.getElementById('customTextInput').value;
+
+      const font_size = 18;
+      ctx.font = font_size + 'px Arial';
+
+      const customtextWidth = ctx.measureText(customText).width;
+      const customtextHeight = font_size;
+
+      const firstLineTextWidth = ctx.measureText(`${customer} - ${date}`).width;
+      const firstLineTextHight = font_size;
+
+      const boxWidth = ctx.canvas.width;
+      const boxHeight = 80;
+
+      // Clear canvas
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      // Draw image
+      const img = new Image();
+      img.onload = function () {
+        ctx.drawImage(img, 0, 0);
+
+        // Draw grey box
+        ctx.fillStyle = 'rgba(128, 128, 128, 0.9)';
+        ctx.fillRect(0, 0, boxWidth, boxHeight);
+
+        // Draw text on the image
+        ctx.fillStyle = 'black';
+        ctx.fillText(`${customer} - ${date}`, (ctx.canvas.width - firstLineTextWidth) / 2, 30);
+        ctx.fillText(customText, (ctx.canvas.width - customtextWidth) / 2, 60);
+
+
+        // adding url to orignal image
+        let canvasNew = document.getElementById('canvas')
+        const dataURL = canvasNew.toDataURL();
+        canvasNew.willReadFrequently = true;
+
+        outputImage.src = dataURL;
+        backgroundImage.style.backgroundImage =`url(${dataURL})`;
+      }
+      img.src = imgSrc;
+
+
+    }
+  </>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/signature_pad/1.3.5/signature_pad.min.js"
   integrity="sha512-kw/nRM/BMR2XGArXnOoxKOO5VBHLdITAW00aG8qK4zBzcLVZ4nzg7/oYCaoiwc8U9zrnsO9UHqpyljJ8+iqYiQ=="
   crossorigin="anonymous" referrerpolicy="no-referrer"></script>
@@ -565,7 +769,6 @@ display: none;
     // Check if viewport width is less than 616px (considered as mobile)
     if (viewportWidth < 616) {
       var textareaWidth = document.querySelector('textarea').clientWidth;
-      console.log(textareaWidth);
       var signaturePad = document.getElementById('signature-pad');
       signaturePad.style.setProperty('width', `${textareaWidth}px`, 'important');
     }
@@ -719,7 +922,6 @@ display: none;
 
       
         var files = e.target.files;
-      console.log(files.length)
 
         if (files) {
             var dataFilesInput = document.getElementById("data_files");
@@ -779,10 +981,12 @@ display: none;
               return false;
             } else {
               imgArray.push(f);
-
+              
               var reader = new FileReader();
               reader.onload = function (e) {
-                var html = "<div class='upload__img-box' ><div style='background-image: url(" + e.target.result + ")' data-number='" + $(".upload__img-close").length + "' data-file='" + f.name + "' class='img-bg'><div class='upload__img-close'>x</div></div><br><input placeholder='Enter Caption' name='caption' type='text' /><br></div>";
+                var html = `<div class='upload__img-box'><div style='background-image: url("${e.target.result}")' data-number='${$(".upload__img-close").length}' data-file='${f.name}' class='img-bg'><div class='upload__img-close'>x</div></div><br><button type="button" class="btn btn-primary edit-btn" data-toggle="modal" data-target="#exampleModal" onclick="openModal(this)">
+                Edit
+              </button><br></div>`;
                 imgWrap.append(html);
                 iterator++;
               }
@@ -804,6 +1008,7 @@ display: none;
       $(this).parent().parent().remove();
     });
   }
+
 </script>
 
 
@@ -828,18 +1033,16 @@ display: none;
     }
 
 
-
-
+  
 
     var submitBtn = document.getElementById("submitBtn");
     submitBtn.addEventListener("click", function () {
 
-       const alertBox = document.querySelector(".custom-alert");
+      const alertBox = document.querySelector(".custom-alert");
       if (!(alertBox.classList.contains("d-none"))) {
         alert("Please Enter Valid Clock in(Must be in Past) & Clock Out(Must be in Future)!")
 
         var formControls = document.querySelectorAll('.form-control');
-        console.log(formControls)
         /* formControls.forEach(function (control) {
           if (!control.checkValidity()) {
             control.style.backgroundColor = "#ff0000!important;";
@@ -851,7 +1054,6 @@ display: none;
 
 
       var formControls = document.querySelectorAll('.form-control');
-      console.log(formControls)
       /* formControls.forEach(function (control) {
         if (!control.checkValidity()) {
           control.style.backgroundColor = "#ff0000!important;";
