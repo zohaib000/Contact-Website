@@ -637,9 +637,11 @@
           canvas.height = img.height;
           ctx.drawImage(img, 0, 0);
           imgSrc = img.src;
+          ctx.font = `22px Arial`;
           drawText();
         }
         img.src = backgroundImageSrc;
+        
       }
 
     /* function handleImage(e) {
@@ -661,6 +663,50 @@
       reader.readAsDataURL(e.target.files[0]);
     } */
 
+    function getCurrentFontSize(canvas) {
+        const context = canvas.getContext('2d');
+        const currentFont = context.font;
+
+        // Parse font size from the font string
+        const fontSizeRegex = /(\d+)px/;
+        const matches = fontSizeRegex.exec(currentFont);
+
+        if (matches && matches.length > 1) {
+          return parseInt(matches[1]);
+        } else {
+          return null; // Unable to parse font size
+        }
+      }
+
+
+    function autoResizeText(canvas, text, customertext,maxWidth, defaultFontSize) {
+        const context = canvas.getContext('2d');
+        let fontSize = defaultFontSize;
+
+        // Set initial font size
+        context.font = `${fontSize}px Arial`;
+
+        // Measure text width
+        let textWidth = context.measureText(text).width;
+        let customertextwidth = context.measureText(customertext).width;
+
+        console.log("Function code is called !")
+        console.log(getCurrentFontSize(canvas))
+
+
+        // Adjust font size if text width exceeds max width
+        while ((textWidth > maxWidth || customertextwidth > maxWidth) && fontSize > 1) {
+          fontSize -= 5;
+          console.log("applied")
+          context.font = `${fontSize}px Arial`;
+          textWidth = context.measureText(text).width;
+          customertextwidth = context.measureText(customertext).width;
+        }
+
+        return fontSize;
+      }
+
+
     function drawText() {
       if (!imgSrc) return;
 
@@ -671,7 +717,8 @@
       const date = document.getElementById('dateInput').value;
       const customText = document.getElementById('customTextInput').value;
 
-      const font_size = 22;
+      const fontSize = autoResizeText(canvas, customText, `${customer} - ${date}`, ctx.canvas.width, getCurrentFontSize(canvas));
+      const font_size = fontSize;
       ctx.font = 'bold ' + font_size + 'px Arial'; // Set font weight to bold
       ctx.fillStyle = 'black'; // Set fill style to black
 
