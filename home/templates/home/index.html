@@ -695,9 +695,9 @@
 
 
         // Adjust font size if text width exceeds max width
-        while ((textWidth > maxWidth || customertextwidth > maxWidth) && fontSize > 1) {
+        while ((textWidth+15 > maxWidth || customertextwidth+15 > maxWidth-10) && fontSize > 1) {
           fontSize -= 5;
-          console.log("applied")
+          console.log("applied",textWidth)
           context.font = `${fontSize}px Arial`;
           textWidth = context.measureText(text).width;
           customertextwidth = context.measureText(customertext).width;
