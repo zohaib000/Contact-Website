@@ -8,9 +8,9 @@
     font-family: Verdana, Geneva, Tahoma, sans-serif;
   }
 
-  #data_files{
-/* display: none; */
-  }
+  .modal-backdrop {
+   background-color: transparent;
+}
   html,
   body {
     zoom: 0.9 !important;
@@ -671,8 +671,9 @@
       const date = document.getElementById('dateInput').value;
       const customText = document.getElementById('customTextInput').value;
 
-      const font_size = 18;
-      ctx.font = font_size + 'px Arial';
+      const font_size = 22;
+      ctx.font = 'bold ' + font_size + 'px Arial'; // Set font weight to bold
+      ctx.fillStyle = 'black'; // Set fill style to black
 
       const customtextWidth = ctx.measureText(customText).width;
       const customtextHeight = font_size;
@@ -681,7 +682,7 @@
       const firstLineTextHight = font_size;
 
       const boxWidth = ctx.canvas.width;
-      const boxHeight = 80;
+      const boxHeight = 70;
 
       // Clear canvas
       ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -692,7 +693,7 @@
         ctx.drawImage(img, 0, 0);
 
         // Draw grey box
-        ctx.fillStyle = 'rgba(128, 128, 128, 0.9)';
+        ctx.fillStyle = 'rgba(128, 128, 128, 1)';
         ctx.fillRect(0, 0, boxWidth, boxHeight);
 
         // Draw text on the image
@@ -984,7 +985,7 @@
               
               var reader = new FileReader();
               reader.onload = function (e) {
-                var html = `<div class='upload__img-box'><div style='background-image: url("${e.target.result}")' data-number='${$(".upload__img-close").length}' data-file='${f.name}' class='img-bg'><div class='upload__img-close'>x</div></div><br><button type="button" class="btn btn-primary edit-btn" data-toggle="modal" data-target="#exampleModal" onclick="openModal(this)">
+                var html = `<div class='upload__img-box'><div style='background-image: url("${e.target.result}")' data-number='${$(".upload__img-close").length}' data-file='${f.name}' class='img-bg'><div class='upload__img-close'>x</div></div><br><button type="button" class="btn btn-primary edit-btn" data-toggle="modal" data-target="#exampleModal"  onclick="openModal(this)">
                 Edit
               </button><br></div>`;
                 imgWrap.append(html);
