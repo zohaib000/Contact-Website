@@ -14,7 +14,14 @@
 
   .modal-backdrop {
     background-color: transparent;
+    z-index: -1;
+
   }
+
+  body.modal-open {
+    overflow: scroll;
+  }
+
 
   html,
   body {
@@ -533,7 +540,6 @@
             <img src="" id="outputImage" alt="">
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
             <button type="button" class="btn btn-primary" data-dismiss="modal">Save changes</button>
           </div>
         </div>
@@ -698,14 +704,10 @@
         let textWidth = context.measureText(text).width;
         let customertextwidth = context.measureText(customertext).width;
 
-        console.log("Function code is called !")
-        console.log(getCurrentFontSize(canvas))
-
 
         // Adjust font size if text width exceeds max width
         while ((textWidth + 15 > maxWidth || customertextwidth + 15 > maxWidth - 10) && fontSize > 1) {
           fontSize -= 5;
-          console.log("applied", textWidth)
           context.font = `${fontSize}px Arial`;
           textWidth = context.measureText(text).width;
           customertextwidth = context.measureText(customertext).width;
