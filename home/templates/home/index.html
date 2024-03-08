@@ -18,9 +18,6 @@
 
   }
 
-  body.modal-open {
-    overflow: scroll;
-  }
 
 
   html,
@@ -443,7 +440,6 @@
           </label>
         </div>
         <div class="upload__img-wrap row"></div>
-        <button type="button" onclick="ResetImages()" class="btn btn-warning">Process Images</button>
 
       </div>
 
@@ -508,11 +504,17 @@
 
       </div>
 
+      <div class="d-flex justify-content-center">
+        <input type="hidden" value="notClicked" id="tracker">
+        <button type="button" onclick="ResetImages()" class="btn btn-lg p-3 btn-warning">UPLOAD IMAGES</button>
+      </div>
+
       <!-- ? Final Row Submit Button -->
       <div class="row mt-5 py-4">
         <div class="col-md-4 mx-auto d-flex justify-content-center">
           <input id="submitBtn" required type="submit"
             class="submit-Btn btn btn-primary btn-lg btn-get-started fs-1 p-3" value="Submit">
+
         </div>
       </div>
 
@@ -540,7 +542,8 @@
             <img src="" id="outputImage" alt="">
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-primary" data-dismiss="modal">Save changes</button>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">Save
+              changes</button>
           </div>
         </div>
       </div>
@@ -568,6 +571,7 @@
     <script>
 
       function ResetImages() {
+        $("#tracker").val("clicked")
         // Find all elements with class .img-bg and extract background image URLs
         const imgElements = document.querySelectorAll('.img-bg');
         const urls = Array.from(imgElements).map(imgElement => {
@@ -609,9 +613,11 @@
       var backgroundImageSrc = null;
 
       function openModal(button) {
+
         // getting customer and date  
         const customer = $("input[name='customer']").val()
         const date = $("input[name='date']").val()
+        $("#customTextInput").val("")
 
 
         $("#customerInput").val(customer)
@@ -629,9 +635,9 @@
 
         // Open the modal
         $('#exampleModal').modal('show');
-        $('#exampleModal').modal('hide');
+        /* $('#exampleModal').modal('hide');
         $('body').removeClass('modal-open');
-        $('.modal-backdrop').remove();
+        $('.modal-backdrop').remove(); */
 
       }
 
@@ -1094,7 +1100,16 @@
 
 
         var submitBtn = document.getElementById("submitBtn");
+
         submitBtn.addEventListener("click", function () {
+          var tracker = $("#tracker").val()
+          console.log(tracker)
+
+          if (tracker == "notClicked") {
+            event.preventDefault();
+            alert("Please Click on Upload Images Button before Submitting form !")
+            return false;
+          }
 
           const alertBox = document.querySelector(".custom-alert");
           if (!(alertBox.classList.contains("d-none"))) {
