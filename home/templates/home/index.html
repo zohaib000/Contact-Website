@@ -443,6 +443,12 @@
 
       </div>
 
+      <div class="d-flex justify-content-center py-4">
+        <input type="hidden" value="notClicked" id="tracker">
+        <button type="button" onclick="ResetImages()" class="btn btn-lg p-3 btn-primary text-white fw-bold">UPLOAD
+          IMAGES</button>
+      </div>
+
 
       <!-- ? Row - 6 -->
       <div class="row form-row justify-content-between">
@@ -504,10 +510,7 @@
 
       </div>
 
-      <div class="d-flex justify-content-center">
-        <input type="hidden" value="notClicked" id="tracker">
-        <button type="button" onclick="ResetImages()" class="btn btn-lg p-3 btn-warning">UPLOAD IMAGES</button>
-      </div>
+
 
       <!-- ? Final Row Submit Button -->
       <div class="row mt-5 py-4">
@@ -542,8 +545,12 @@
             <img src="" id="outputImage" alt="">
           </div>
           <div class="modal-footer">
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">Save
-              changes</button>
+            <input type="hidden" value="NotClicked" id="viewChangesTracker" />
+            <button type="button" class="btn btn-lg btn-primary saveBtn" id="viewBtn" aria-label="Close">View
+              Changes</button>
+            <button type="button" class="btn btn-lg btn-success text-dark saveBtn" data-dismiss="modal" id="saveBtn"
+              aria-label="Close">Save
+              Changes</button>
           </div>
         </div>
       </div>
@@ -613,6 +620,7 @@
       var backgroundImageSrc = null;
 
       function openModal(button) {
+        $("#viewChangesTracker").val("NotClicked")
 
         // getting customer and date  
         const customer = $("input[name='customer']").val()
@@ -642,9 +650,36 @@
       }
 
       /* document.getElementById('imageInput').addEventListener('change', handleImage, false); */
-      document.getElementById('customerInput').addEventListener('input', drawText, false);
+      /* document.getElementById('customerInput').addEventListener('input', drawText, false);
       document.getElementById('dateInput').addEventListener('input', drawText, false);
-      document.getElementById('customTextInput').addEventListener('input', drawText, false);
+      document.getElementById('customTextInput').addEventListener('input', drawText, false); */
+      document.getElementById('saveBtn').addEventListener('click', (event) => {
+        const val = $("#viewChangesTracker").val()
+        console.log(val)
+        if (val == "NotClicked") {
+          alert("Please Click View Changes button first !")
+          event.preventDefault()
+          event.stopPropagation();
+          return
+        }
+        drawText()
+      }, false);
+
+      document.getElementById('viewBtn').addEventListener('click', () => {
+        $("#viewChangesTracker").val("clicked")
+        drawText()
+      }, false);
+
+
+      /* const saveButtons = document.querySelectorAll('.saveBtn');
+      saveButtons.forEach(button => {
+        button.addEventListener('click', drawText, false);
+      });
+
+
+ */
+
+
 
       let imgSrc = '';
       function handleImage() {
@@ -753,14 +788,18 @@
         // Draw image
         const img = new Image();
         img.onload = function () {
+          const bv = this.height * 0.15;
+          console.log(bv)
           ctx.drawImage(img, 0, 0);
 
           // Draw grey box
           ctx.fillStyle = 'rgba(128, 128, 128, 1)';
-          ctx.fillRect(0, 0, boxWidth, boxHeight);
+          ctx.fillRect(0, 0, boxWidth, bv);
 
           // Draw text on the image
           ctx.fillStyle = 'black';
+          /* console.log(bv * 0.5)
+          ctx.font = 'bold ' + bv * 0.3 + 'px Arial'; // Set font weight to bold */
           ctx.fillText(`${customer} - ${date}`, (ctx.canvas.width - firstLineTextWidth) / 2, 30);
           ctx.fillText(customText, (ctx.canvas.width - customtextWidth) / 2, 60);
 
