@@ -692,7 +692,7 @@
           canvas.height = img.height;
           ctx.drawImage(img, 0, 0);
           imgSrc = img.src;
-          ctx.font = `22px Arial`;
+          ctx.font = `18px Arial`;
           drawText();
         }
         img.src = backgroundImageSrc;
@@ -770,6 +770,7 @@
 
         const fontSize = autoResizeText(canvas, customText, `${customer} - ${date}`, ctx.canvas.width, getCurrentFontSize(canvas));
         const font_size = fontSize;
+        console.log(font_size)
         ctx.font = 'bold ' + font_size + 'px Arial'; // Set font weight to bold
         ctx.fillStyle = 'black'; // Set fill style to black
 
@@ -780,7 +781,7 @@
         const firstLineTextHight = font_size;
 
         const boxWidth = ctx.canvas.width;
-        const boxHeight = 70;
+        const boxHeight = 63;
 
         // Clear canvas
         ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -788,13 +789,13 @@
         // Draw image
         const img = new Image();
         img.onload = function () {
-          const bv = this.height * 0.15;
+          const bv = this.height * 0.12;
           console.log(bv)
           ctx.drawImage(img, 0, 0);
 
           // Draw grey box
           ctx.fillStyle = 'rgba(128, 128, 128, 1)';
-          ctx.fillRect(0, 0, boxWidth, bv);
+          ctx.fillRect(0, 0, boxWidth, boxHeight);
 
           // Draw text on the image
           ctx.fillStyle = 'black';
