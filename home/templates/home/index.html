@@ -551,6 +551,8 @@
             <button type="button" class="btn btn-lg btn-success text-dark saveBtn" data-dismiss="modal" id="saveBtn"
               aria-label="Close">Save
               Changes</button>
+            <button type="button" class="btn btn-lg btn-success text-dark" id="downloadBtn"
+              aria-label="Close">Download</button>
           </div>
         </div>
       </div>
@@ -573,6 +575,20 @@
         $('#exampleModal').on('hidden.bs.modal', function () {
           $('body').css('overflow', 'auto');
         });
+
+
+        $("#downloadBtn").click(function () {
+          // Get the base64 data of the image
+          var imageData = $("#outputImage").attr("src");
+          // Create a temporary anchor element
+          var a = $("<a>").attr("href", imageData).attr("download", "image.png").appendTo("body");
+          // Trigger a click event on the anchor element
+          a[0].click();
+          // Remove the temporary anchor element
+          a.remove();
+        });
+
+
       });
     </script>
     <script>
@@ -1190,6 +1206,9 @@
 
 
       });
+
+
+
     </script>
 
 
