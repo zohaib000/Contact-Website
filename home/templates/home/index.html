@@ -553,6 +553,9 @@
               Changes</button>
             <button type="button" class="btn btn-lg btn-success text-dark" id="downloadBtn"
               aria-label="Close">Download</button>
+
+            <button id="increaseFontSize">Increase Font Size</button>
+            <button id="decreaseFontSize">Decrease Font Size</button>
           </div>
         </div>
       </div>
@@ -571,6 +574,37 @@
     {% block Script %}
 
     <script>
+      document.getElementById('increaseFontSize').addEventListener('click', () => {
+        const canvas = document.getElementById('canvas');
+        const ctx = canvas.getContext('2d');
+        const fontSize = parseInt(ctx.font.split(' ')[1]); // Get current font size
+        ctx.font = `bold ${fontSize + 1}px Arial`; // Increase font size by 1
+        drawText(); // Redraw text with new font size
+      });
+
+      document.getElementById('decreaseFontSize').addEventListener('click', () => {
+        const canvas = document.getElementById('canvas');
+        const ctx = canvas.getContext('2d');
+        const fontSize = parseInt(ctx.font.split(' ')[1]); // Get current font size
+        ctx.font = `bold ${fontSize - 1}px Arial`; // Decrease font size by 1
+        drawText(); // Redraw text with new font size
+      });
+      document.getElementById('increaseBoxSize').addEventListener('click', () => {
+        const canvas = document.getElementById('canvas');
+        const ctx = canvas.getContext('2d');
+        boxHeight += 10; // Increase box height by 10
+        drawText(); // Redraw text with new box height
+      });
+
+      document.getElementById('decreaseBoxSize').addEventListener('click', () => {
+        const canvas = document.getElementById('canvas');
+        const ctx = canvas.getContext('2d');
+        if (boxHeight > 10) { // Ensure box height doesn't become negative
+          boxHeight -= 10; // Decrease box height by 10
+          drawText(); // Redraw text with new box height
+        }
+      });
+
       $(document).ready(function () {
         $('#exampleModal').on('hidden.bs.modal', function () {
           $('body').css('overflow', 'auto');
@@ -578,6 +612,15 @@
 
 
         $("#downloadBtn").click(function () {
+          const val = $("#viewChangesTracker").val()
+          console.log(val)
+          if (val == "NotClicked") {
+            alert("Please Click View Changes button first !")
+            event.preventDefault()
+            event.stopPropagation();
+            return
+          }
+
           // Get the base64 data of the image
           var imageData = $("#outputImage").attr("src");
           // Create a temporary anchor element
@@ -805,7 +848,7 @@
         // Draw image
         const img = new Image();
         img.onload = function () {
-          const bv = this.height * 0.12;
+          const bv = this.height * 0.65;
           console.log(bv)
           ctx.drawImage(img, 0, 0);
 
@@ -817,8 +860,8 @@
           ctx.fillStyle = 'black';
           /* console.log(bv * 0.5)
           ctx.font = 'bold ' + bv * 0.3 + 'px Arial'; // Set font weight to bold */
-          ctx.fillText(`${customer} - ${date}`, (ctx.canvas.width - firstLineTextWidth) / 2, 30);
-          ctx.fillText(customText, (ctx.canvas.width - customtextWidth) / 2, 60);
+          ctx.fillText(`${customer} - ${date}`, (ctx.canvas.width - firstLineTextWidth) / 2, 20);
+          ctx.fillText(customText, (ctx.canvas.width - customtextWidth) / 2, 45);
 
 
           // adding url to orignal image
